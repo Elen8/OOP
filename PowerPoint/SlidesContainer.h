@@ -2,14 +2,15 @@
 #include <vector>
 #include "SlidesBuilder.h"
 
-class ClassContainer
+class SlideContainer
 {
 public:
 	void add();
-	void remove(int);
+	void remove(const int);
 	void move(int, int);
-	void get_count_of_slides();
-	void get_slide_content();
+
+	int get_count_of_slides();
+	std::string get_slide_content(int);
 
 private:
 	SlidesBuilder* slides_builder;
