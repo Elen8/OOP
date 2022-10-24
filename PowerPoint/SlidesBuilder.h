@@ -4,91 +4,24 @@
 #include <vector>
 #include "InputAnalyser.h"
 
-//write a Tools class to have all the tools inherited and write Bridge for tool-actions
-
-enum class Colours {
-	white,
-	yellow,
-	orange,
-	red,
-	pink,
-	purple,
-	blue,
-	brown,
-	black
-};
-
-struct Brush
-{
-	int style = 0;
-	Colours colour = Colours::black;
-	size_t size = 0;
-};
-
-struct Text
-{
-	size_t bold;
-	size_t italic;
-	size_t size;
-	std::string content;
-	Colours colour;
-	int font;
-};
-
-struct Square
-{
-	std::vector<std::pair<float, float>> coordinates;
-	Colours colour;
-};
-
-struct Rectangle
-{
-	std::vector<std::pair<float, float>> coordinates;
-	Colours colour;
-};
-
-struct Triangle
-{
-	std::vector<std::pair<float, float>> coordinates;
-	Colours colour;
-};
-
-struct Circle
-{
-	std::vector<std::pair<float, float>> coordinates;
-	Colours colour;
-};
-
-struct Ellipse
-{
-	std::vector<std::pair<float, float>> coordinates;
-	Colours colour;
-};
-
-
-enum Tools
-{
-	Text, 
-	Brush,
-	Square,
-	Rectangle,
-	Triangle,
-	Circle,
-	Ellipse
-};
-
 class SlidesBuilder
 {
 public:
-	void add(); //to vector
-	void remove(); //from vector
-	void undo(); //from vector
-	void redo(); //from vector
+	void add(const std::string&); //to vector
+	void remove(std::string&); //command from vector
+	
+	//void undo(); //from vector
+	//void redo(); //from vector
+	void remove_from_slides(int);
+	void move_slides(int, int);
 
-private:
+	int get_slides_count();
+	std::string get_slides_content(int);
+
+protected:
 	std::vector<std::string> slides; //calss type
 	Actions action; //class type
-	Tools tool;
+	//Tools tool;
 };
 
 #endif
