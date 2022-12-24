@@ -5,9 +5,14 @@
 class CEditor
 {
 public:
-	void Undo(CAction*);
-	void Redo(CAction*);
-	void Do(CAction*);
+	CEditor()
+	{
+		PDoc = std::make_unique<CDocument>();
+		PPres = std::make_unique<CPresentation>();
+	}
+	void Undo(std::shared_ptr<Action>(UAct));
+	void Redo(std::shared_ptr<Action>(RAct));
+	void Do(std::shared_ptr<Action>(DAct));
 private:
 	std::unique_ptr<CUndo>	PUndo{ new CUndo() };
 	std::unique_ptr<CRedo>	PRedo{ new CRedo() };
