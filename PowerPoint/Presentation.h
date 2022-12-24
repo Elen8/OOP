@@ -4,6 +4,13 @@
 
 class CPresentation
 {
+public:
+
+	CPresentation() 
+	{
+
+	};
+	void Present();
 protected:
 	std::vector<std::shared_ptr<CSlide>> VSlide;
 };
