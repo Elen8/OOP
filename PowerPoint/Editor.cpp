@@ -1,18 +1,18 @@
 #include "Editor.h"
 
 
-void CEditor::Undo(CAction* CAct)
+void CEditor::Undo(std::shared_ptr<Action>(UAct))
 {
-	PUndo->UndoAction(CAct);
+	PUndo->UndoAction(UAct);
 }
 
-void CEditor::Redo(CAction* CAct)
+void CEditor::Redo(std::shared_ptr<Action>(RAct))
 {
-	PRedo->RedoAction(CAct);
+	PRedo->RedoAction(RAct);
 }
 
-void CEditor::Do(CAction* CAct)
+void CEditor::Do(std::shared_ptr<Action>(DAct))
 {
-	//call IItem or Slide
-	PDo->AddActionToStack(CAct);
+	PDo->AddActionToStack(DAct);
+	//kanchel hamapatasxan item functiony
 }
