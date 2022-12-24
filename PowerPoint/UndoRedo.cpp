@@ -1,11 +1,11 @@
 #include "UndoRedo.h"
 
-void CDo::AddActionToStack(CAction* DAct)
+void CDo::AddActionToStack(std::shared_ptr<Action>(DAct))
 {
-	undo.push(DAct);
+	undo.push(std::move(DAct));
 }
 
-void CUndo::UndoAction(CAction* UAct)
+void CUndo::UndoAction(std::shared_ptr<Action>(UAct))
 {
 	if (!undo.empty())
 	{
@@ -14,7 +14,7 @@ void CUndo::UndoAction(CAction* UAct)
 	}
 }
 
-void CRedo::RedoAction(CAction* RAct)
+void CRedo::RedoAction(std::shared_ptr<Action>(RAct))
 {
 	if (!redo.empty())
 	{
