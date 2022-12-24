@@ -1,48 +1,48 @@
 #include "Item.h"
 
-const void IMaincCharasteristics::SetID()
+void IMainCharasteristics::SetID(int id)
 {
-	m_ID = 0; //get
+	m_ID = id; //get
 }
 
-const void IMaincCharasteristics::SetGeometry()
+void IMainCharasteristics::SetGeometry(int a, int b)
 {
-	m_rect.first = 0; //get
-	m_rect.second = 0; //get
+	m_rect.first = a; //get
+	m_rect.second = b; //get
 }
 
-const void IMaincCharasteristics::SetAngle()
+void IMainCharasteristics::SetAngle(int a)
 {
-	m_angle = 0; //get
+	m_angle = a; //get
 }
 
-const void IMaincCharasteristics::SetShape()
+void IMainCharasteristics::SetShape(int s)
 {
-	m_shapetype = ShapeType::Rectangle;
+	m_shapetype = ShapeType::Rectangle;//put s-th shape
 }
 
-int IMaincCharasteristics::GetID()
+int IMainCharasteristics::GetID()
 {
 	return m_ID;
 }
 
-Rect IMaincCharasteristics::GetGeometry()
+Rect IMainCharasteristics::GetGeometry()
 {
 	m_rect.first = 0;
 	m_rect.second = 0;
 	return m_rect;
 }
 
-Angle_t IMaincCharasteristics::GetAngle()
+Angle_t IMainCharasteristics::GetAngle()
 {
 	m_angle = 0;
+	return m_angle;
 }
 
-ShapeType IMaincCharasteristics::GetShape()
+ShapeType IMainCharasteristics::GetShape()
 {
 	return m_shapetype;
 }
-
 
 
 Colors IVisualAttributes::GetColor()
@@ -50,7 +50,7 @@ Colors IVisualAttributes::GetColor()
 	return color;
 }
 
-const void IVisualAttributes::SetColor()
+void IVisualAttributes::SetColor()
 {
 	color = Colors::Black;
 }
@@ -60,45 +60,61 @@ Thikness IVisualAttributes::GetThickness()
 	return thikness;
 }
 
-const void IVisualAttributes::setThickness()
+void IVisualAttributes::setThickness()
 {
 	thikness = Thikness::Normal;
 }
 
-IVisualAttributes CItem::GetAttributes()
-{
-	iva = new IVisualAttributes();
-	//
-}
+//IVisualAttributes CItem::GetAttributes()
+//{
+//	iva = new IVisualAttributes();
+//	//
+//}
 
-void IItemCollection::Add(IItem* item)
+void IItemCollection::Add(std::shared_ptr<IItem> item)
 {
 	item_collection.push_back(item);
 }
 
 void IItemCollection::Remove(int position)
 {
-	std::vector<IItem*>::iterator iter;
-	iter = item_collection.begin();
-	item_collection.erase(iter + position);
+	std::vector<std::shared_ptr<IItem>>::iterator iter;
+	//iter = item_collection.begin();
+	// item_collection.erase(iter + position);
 }
 
-int IItemCollection::GetCount()
+size_t IItemCollection::GetCount()
 {
 	return item_collection.size();
 }
 
-IItem* IItemCollection::At(int position)
+std::shared_ptr<IItem> IItemCollection::At(int position)
 {
-	return item_collection[position];
+	return std::move(item_collection[position]);
 }
 
-IItem* IItemCollection::Find(int ID)
-{
-	std::vector<IItem*>::iterator iter;
-	for (auto i : item_collection)
-	{
-		
-	}
-}
+//IItem* IItemCollection::Find(int ID)
+//{
+//	std::vector<IItem*>::iterator iter;
+//	for (auto i : item_collection)
+//	{
+//		
+//	}
+//	return;
+//}
 
+//void CItem::SetMainCharasteristics() {
+//
+//}
+//
+//void CItem::SetAttributes() {
+//
+//}
+//
+//IVisualAttributes CItem::GetAttributes() {
+//
+//}
+//
+//IMainCharasteristics CItem::GetMainCharasteristics() {
+//
+//}
