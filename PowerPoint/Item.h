@@ -11,6 +11,7 @@ enum ShapeType {Triangle, Square, Circle, Text, Rectangle, Elipsoid};
 enum Colors {Black, White, Purple, Blue, Red, Green, Orange, Yellow, Pink};
 enum Thikness {VeryThin, Thin, Normal, Bold, VeryBold};
 
+
 class IItem
 {
 protected:
@@ -19,24 +20,27 @@ protected:
 	Angle_t m_angle;
 	ShapeType m_shapetype;
 public:
-	virtual const void SetID() = 0;
-	virtual const void SetAngle() = 0;
-	virtual const void SetGeometry() = 0;
-	virtual const void SetShape() = 0;
+	virtual void SetID(int) = 0;
+	virtual void SetAngle(int) = 0;
+	virtual void SetGeometry(int, int) = 0;
+	virtual void SetShape(int) = 0;
 	virtual int GetID() = 0;
 	virtual Rect GetGeometry() = 0;
 	virtual Angle_t GetAngle() = 0;
 	virtual ShapeType GetShape() = 0;
-	virtual IVisualAttributes GetAttributes() = 0; //implemet
+	//virtual void SetMainCharasteristics() = 0;
+	//virtual void SetAttributes() = 0;
+	//virtual IMainCharasteristics GetMainCharasteristics() = 0;
+	//virtual IVisualAttributes GetAttributes() = 0;
 };
 
-class IMaincCharasteristics :public IItem
+class IMainCharasteristics :public IItem
 {
 public:
-	const void SetID() override;
-	const void SetGeometry() override;
-	const void SetAngle() override;
-	const void SetShape() override;
+	void SetID(int) override;
+	void SetGeometry(int, int) override;
+	void SetAngle(int) override;
+	void SetShape(int) override;
 
 	int GetID();
 	Rect GetGeometry();
@@ -44,56 +48,51 @@ public:
 	ShapeType GetShape();
 };
 
-
-
 class IVisualAttributes 
 {
 private:
 	Colors color;
 	Thikness thikness;
 public:
-	Colors GetColor();
-	const void SetColor();
-	Thikness GetThickness();
-	const void setThickness();
+	Colors		GetColor();
+	void		SetColor();
+	Thikness	GetThickness();
+	void		setThickness();
 };
-
-
-class CItem :public IItem, IVisualAttributes
-{
-private:
-	IVisualAttributes* iva;
-
-public:
-	IVisualAttributes GetAttributes() override;
-};
-
-
 
 class IItemCollection
 {
 protected:
-	std::vector<IItem*> item_collection;
+	std::vector<std::shared_ptr<IItem>> item_collection;
 public:
-	void Add(IItem*);
-	void Remove(int); //pos
-	int GetCount();
-	IItem* At(int); //pos
-	IItem* Find(int); //ID
+	void Add(std::shared_ptr<IItem> = std::shared_ptr<IItem>());
+	void Remove(int); 
+	size_t GetCount();
+	std::shared_ptr<IItem> At(int);
 };
 
-
-
-class IGroupItem
+class CItem :public IMainCharasteristics, IVisualAttributes
 {
-	//*GetCollection();
-};
-
-class ISingleItem :public IItem
-{
-	ShapeType GetShape() override;
+public:
+	std::unique_ptr<IVisualAttributes> iva;
+	std::unique_ptr<IMainCharasteristics> imc;
+public:
+	/*void SetMainCharasteristics() override;
+	void SetAttributes() override;
 	IVisualAttributes GetAttributes() override;
+	IMainCharasteristics GetMainCharasteristics() override;*/
 };
 
+//
+//class IGroupItem
+//{
+//	//*GetCollection();
+//};
+//
+//class ISingleItem :public IItem
+//{
+//	ShapeType GetShape() override;
+//	//IVisualAttributes GetAttributes() override;
+//};
 
 #endif //ITEM_H
